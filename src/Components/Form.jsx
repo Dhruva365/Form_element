@@ -5,7 +5,18 @@ export default function Form() {
   const [userEmail, setUserEmail] = useState("");
   const [userGender, setUserGender] = useState("null");
   const [showDetails, setShowDetails] = useState(false);
+  const [disable, setDisable] = useState(true);
   //   const [result, setResult] = useState(false);
+  function disableHandle() {
+    if (user !== "" && userEmail !== "" && userGender !== "null") {
+      setDisable(false);
+    } else {
+      setDisable(true);
+    }
+    console.log(user);
+    console.log(userEmail);
+    console.log(userGender);
+  }
 
   return (
     <>
@@ -24,6 +35,7 @@ export default function Form() {
             setUser(e.target.value);
             setShowDetails(false);
           }}
+          onKeyUp={disableHandle}
         />
         <br />
         <label for="email1">Email:</label>
@@ -35,6 +47,7 @@ export default function Form() {
             setUserEmail(e.target.value);
             setShowDetails(false);
           }}
+          onKeyUp={disableHandle}
         />
         <br />
         <label>
@@ -44,16 +57,18 @@ export default function Form() {
             onChange={(e) => {
               setUserGender(e.target.value);
               setShowDetails(false);
+              disableHandle();
             }}
           >
             <option value={"Male"}>Male</option>
-            <option value={"Female"}>female</option>
+            <option value={"Female"}>Female</option>
             <option value={"null"}>null</option>
           </select>
         </label>
         <br />
-
-        <button type="submit">Submit</button>
+        <button type="submit" disabled={disable}>
+          Submit
+        </button>
       </form>
       {showDetails === true ? (
         <div>
